@@ -1,0 +1,77 @@
+#include <iostream>
+using namespace std;
+
+double mem;
+bool mem_used;
+
+double add (double a, double b) {
+    mem = a + b;
+    return mem;
+}
+
+double sub(double a, double b) {
+    mem = a - b;
+    return mem;
+}
+
+double tim(double a, double b) {
+    mem = a * b;
+    return mem;
+}
+double div(double a, double b) {
+    if (b != 0) {
+        mem = a / b;
+        return mem;
+    }
+    else {
+        return mem;
+    }
+}
+
+double mod(double a, double b) {
+    if (b != 0) {
+        return  mem = a - (int)(a / b) * b;
+    }
+    else {
+        return mem;
+    }
+}
+void erase(){}
+void menu (){}
+
+switch ()
+{
+case '1) +': 
+    cout << "podaj wartość a i b" << endl;
+    cin >> a >> b;
+    double add(a, b);
+    break;
+case '2) -':
+    cout << "podaj wartość a i b" << endl
+    cin >> a >> b;
+    double sub(a, b);
+    break;
+
+case '3)*':
+    cout << "podaj wartość a i b" << endl;
+    cin >> a >> b;
+    double tim(a, b);
+    break;
+
+case '4)/':
+    cout << "podaj wartość a i b" << endl;
+    cin >> a >> b;
+    double div(a, b);
+    break;
+
+case '5)%': 
+    cout << "podaj wartość a i b" << endl;
+    cin >> a >> b;
+    double mod(a,b);
+    break;
+}
+
+int main()
+{
+    std::cout << "Hello World!\n";
+}
