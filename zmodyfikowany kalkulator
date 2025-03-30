@@ -1,0 +1,118 @@
+#include <iostream>
+using namespace std;
+
+class kalkulator {
+private:
+    double mem = 0.0;
+    bool mem_used = false;
+
+public:
+    double add(double a, double b) {
+        mem = a + b;
+        mem_used = true;
+        return mem;
+    }
+
+    double sub(double a, double b) {
+        mem = a - b;
+        mem_used = true;
+        return mem;
+    }
+
+    double tim(double a, double b) {
+        mem = a * b;
+        mem_used = true;
+        return mem;
+    }
+
+    double div(double a, double b) {
+        if (b == 0) {
+            cerr << "Blad: Dzielenie przez zero!" << endl;
+            return mem;
+        }
+        mem = a / b;
+        mem_used = true;
+        return mem;
+    }
+
+    double mod(double a, double b) {
+        if (b == 0) {
+            cerr << "Blad: Dzielenie przez zero!" << endl;
+            return mem;
+        }
+        mem = a - (int)(a / b) * b;
+        mem_used = true;
+        return mem;
+    }
+
+    double getMem() {  //zwraca nową wartość
+        return mem;
+    }
+
+    void setMem(double new_mem) {   //ustawia nową wartość
+        mem = new_mem; 
+    }
+
+    void erase() {   //resetuje
+        mem = 0.0;
+        mem_used = false;
+    }
+
+    bool isMemUsed() {   //zwraca wartość true (pamięć jest używana lub false (wynik jest 0.0)
+        return mem_used;
+    }
+};
+
+void menu() {
+    char operation;
+    double num1, num2;
+    kalkulator kalk;  
+
+    cout << "Prosty kalkulator konsolowy" << endl;
+    cout << "Dostepne operacje: +, -, *, /, % , c (reset), q (wyjscie)" << endl;
+
+    while (true) {
+        cout << "\nPodaj pierwsza liczbe: ";
+        cin >> num1;
+
+        if (cin.fail()) {
+            cerr << "Blad: Nieprawidlowe dane wejsciowe!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        cout << "Podaj operacje: ";
+        cin >> operation;
+
+        if (operation == 'q') break;
+        if (operation == 'c') {
+            kalk.erase();
+            cout << "Akumulator zresetowany!" << endl;
+            continue;
+        }
+
+        cout << "Podaj druga liczbe: ";
+        cin >> num2;
+        if (cin.fail()) {
+            cerr << "Blad: Nieprawidlowe dane wejsciowe!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        switch (operation) {
+        case '+': cout << "Wynik: " << kalk.add(num1, num2) << endl; break;
+        case '-': cout << "Wynik: " << kalk.sub(num1, num2) << endl; break;
+        case '*': cout << "Wynik: " << kalk.tim(num1, num2) << endl; break;
+        case '/': cout << "Wynik: " << kalk.div(num1, num2) << endl; break;
+        case '%': cout << "Wynik: " << kalk.mod(num1, num2) << endl; break;
+        default: cerr << "Blad: Nieznana operacja!" << endl;
+        }
+    }
+}
+
+int main() {
+    menu();
+    return 0;
+}
