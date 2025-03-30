@@ -1,0 +1,103 @@
+#include <iostream>
+using namespace std;
+
+double mem = 0.0;
+bool mem_used;
+
+double add(double a, double b) {
+    mem = a + b;
+    mem_used = true;
+    return mem;
+}
+
+double sub(double a, double b) {
+    mem = a - b;
+    mem_used = true;
+    return mem;
+}
+
+double tim(double a, double b) {
+    mem = a * b;
+    mem_used = true;
+    return mem;
+}
+
+double div(double a, double b) {
+    if (b == 0) {
+        cerr << "Blad: Dzielenie przez zero!" << endl;
+        return mem;
+    }
+    mem = a / b;
+    mem_used = true;
+    return mem;
+}
+
+double mod(double a, double b) {
+    if (b == 0) {
+        cerr << "Blad: Dzielenie przez zero!" << endl;
+        return mem;
+    }
+    mem = a - (int)(a / b) * b;
+    mem_used = true;
+    return mem;
+}
+
+void erase() {
+    mem = 0.0;
+    mem_used = false;
+}
+
+void menu() {
+    char operation;
+    double num1, num2;
+    cout << "Prosty kalkulator konsolowy" << endl;
+    cout << "Dostepne operacje: +, -, *, /, % (modulo), c (reset), q (wyjscie)" << endl;
+
+    while (true) {
+        cout << "\nPodaj pierwsza liczbe: ";
+        cin >> num1;
+
+        if (cin.fail()) {
+            cerr << "Blad: Nieprawidlowe dane wejsciowe!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        cout << "Podaj operacje: ";
+        cin >> operation;
+
+        if (operation == 'q') break;
+        if (operation == 'c') {
+            erase();
+            cout << "Akumulator zresetowany!" << endl;
+            continue;
+        }
+
+        cout << "Podaj druga liczbe: ";
+        cin >> num2;
+        if (cin.fail()) {
+            cerr << "Blad: Nieprawidlowe dane wejsciowe!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        switch (operation) {
+        case '+': mem = add(num1, num2); break;
+        case '-': mem = sub(num1, num2); break;
+        case '*': mem = tim(num1, num2); break;
+        case '/': mem = div(num1, num2); break;
+        case '%': mem = mod(num1, num2); break;
+        default: cerr << "Blad: Nieznana operacja!" << endl;
+        }
+
+        cout << "Wynik: " << mem << endl;
+    }
+}
+
+int main() {
+    menu();
+    cout << "Koncowa wartosc akumulatora: " << mem << endl;
+    return 0;
+}
